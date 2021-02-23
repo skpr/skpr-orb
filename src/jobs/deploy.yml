@@ -33,7 +33,7 @@ steps:
       condition: <<parameters.package>>
       steps:
         - steps: <<parameters.pre-package>>
-        - skpr/package
-  - skpr/deploy:
+        - package
+  - deploy:
       env: <<parameters.env>>
   - steps: <<parameters.post-deploy>>
