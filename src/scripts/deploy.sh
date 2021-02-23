@@ -1,9 +1,11 @@
 deploy() {
     if [ -z "${SKPR_VERSION}" ]; then
         SKPR_VERSION=$(git describe --tags --always)
+        # shellcheck disable=SC2086
         echo "export SKPR_VERSION=$SKPR_VERSION" >> $BASH_ENV
     fi
     echo "Packaging version: ${SKPR_VERSION}"
+    # shellcheck disable=SC2086
     skpr deploy ${SKPR_ENV} ${SKPR_VERSION}
 }
 
