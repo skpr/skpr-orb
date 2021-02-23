@@ -1,0 +1,9 @@
+version: 2.1
+
+description: >
+  Deploy to the Skpr platform from CircleCI.
+
+# This information will be displayed in the orb registry and is not mandatory.
+display:
+  home_url: "https://www.skpr.com.au"
+  source_url: "https://www.github.com/skpr/skpr-orb"

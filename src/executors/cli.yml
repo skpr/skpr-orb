@@ -1,0 +1,13 @@
+description: >
+  An executor for the Skpr CLI.
+
+parameters:
+  tag:
+    default: latest
+    description: The Skpr CLI version tag
+    type: string
+
+docker:
+  - image: 'skpr/cli:<<parameters.tag>>'
+
+working_directory: /data

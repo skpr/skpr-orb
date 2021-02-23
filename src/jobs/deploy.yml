@@ -1,0 +1,39 @@
+description: >
+  Deploy the current application to Skpr.
+
+executor: cli
+
+parameters:
+  env:
+    type: string
+    default: ""
+    description: The Skpr environment (e.g. dev, stg, prod)
+  version:
+    type: string
+    default: ""
+    description: The version to deploy. If empty, 'git describe tags' will be used.
+  pre-package:
+    type: steps
+    description: Provide any optional pre-package steps you would like to run.
+    default: []
+  package:
+    type: boolean
+    default: true
+    description: Whether to package before deploying.
+  post-deploy:
+    type: steps
+    description: Provide any optional post-deploy steps you would like to run.
+    default: []
+
+
+steps:
+  - checkout
+  - setup_remote_docker
+  - when:
+      condition: <<parameters.package>>
+      steps:
+        - steps: <<parameters.pre-package>>
+        - skpr/package
+  - skpr/deploy:
+      env: <<parameters.env>>
+  - steps: <<parameters.post-deploy>>

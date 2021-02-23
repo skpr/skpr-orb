@@ -1,0 +1,15 @@
+description: >
+  Packages an app for deployment.
+
+parameters:
+  version:
+    type: string
+    default: ""
+    description: "The app version"
+
+steps:
+  - run:
+      environment:
+        PARAM_VERSION: <<parameters.version>>
+      name: Skpr Package
+      command: <<include(scripts/package.sh)>>

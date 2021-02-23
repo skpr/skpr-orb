@@ -1,0 +1,41 @@
+description: >
+  The following example shows a typical dev, stg, prod deployment workflow, running post-deployment steps in the env.
+
+usage:
+  version: 2.1
+  orbs:
+    skpr: skpr/skpr@1.0.0
+  workflows:
+    deploy:
+      jobs:
+        - skpr/deploy:
+            name: deploy_dev
+            env: dev
+            post-deploy:
+              - run: skpr exec dev -- make deploy
+            context: skpr-example
+            filters:
+              branches:
+                only: master
+        - skpr/deploy:
+            name: deploy_stg
+            env: stg
+            post-deploy:
+              - run: skpr exec stg -- make deploy
+            context: skpr-example
+            filters:
+              branches:
+                only: releases
+        - approve:
+            type: approval
+            requires:
+              - deploy_stg
+        - skpr/deploy:
+            name: deploy_prod
+            env: prod
+            package: false
+            post-deploy:
+              - run: skpr exec prod -- make deploy
+            context: skpr-example
+            requires:
+              - approve

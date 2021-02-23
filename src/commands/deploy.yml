@@ -1,0 +1,20 @@
+description: >
+  Deploys to Skpr.
+
+parameters:
+  version:
+    type: string
+    default: ""
+    description: "The app version"
+  env:
+    type: string
+    default: ""
+    description: "The app environment"
+
+steps:
+  - run:
+      environment:
+        SKPR_VERSION: <<parameters.version>>
+        SKPR_ENV: <<parameters.env>>
+      name: Skpr Deploy
+      command: <<include(scripts/deploy.sh)>>
