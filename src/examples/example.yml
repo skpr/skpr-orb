@@ -5,24 +5,33 @@ usage:
   version: 2.1
   orbs:
     skpr: skpr/skpr@1.0.0
+  commands:
+    skpr-post-deploy:
+      parameters:
+        env:
+          type: string
+      steps:
+        - run:
+            name: Skpr Post-Deploy
+            command: skpr exec << parameters.env >> -- make deploy
   workflows:
     deploy:
       jobs:
         - skpr/deploy:
             name: deploy_dev
+            context: skpr-example
             env: dev
             post-deploy:
-              - run: skpr exec dev -- make deploy
-            context: skpr-example
+              - skpr-post-deploy: { env: dev }
             filters:
               branches:
                 only: master
         - skpr/deploy:
             name: deploy_stg
+            context: skpr-example
             env: stg
             post-deploy:
-              - run: skpr exec stg -- make deploy
-            context: skpr-example
+              - skpr-post-deploy: { env: dev }
             filters:
               branches:
                 only: releases
@@ -32,10 +41,10 @@ usage:
               - deploy_stg
         - skpr/deploy:
             name: deploy_prod
+            context: skpr-example
             env: prod
             package: false
             post-deploy:
-              - run: skpr exec prod -- make deploy
-            context: skpr-example
+              - skpr-post-deploy: { env: dev }
             requires:
               - approve

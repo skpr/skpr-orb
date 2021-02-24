@@ -1,0 +1,15 @@
+description: >
+  Gets Skpr environment information.
+
+parameters:
+  env:
+    type: string
+    default: ""
+    description: "The app environment"
+
+steps:
+  - run:
+      environment:
+        SKPR_ENV: <<parameters.env>>
+      name: Skpr Info
+      command: <<include(scripts/info.sh)>>

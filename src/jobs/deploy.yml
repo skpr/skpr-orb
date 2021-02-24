@@ -34,6 +34,8 @@ steps:
       steps:
         - steps: <<parameters.pre-package>>
         - package
+  - info:
+      env: <<parameters.env>>
   - deploy:
       env: <<parameters.env>>
   - steps: <<parameters.post-deploy>>
