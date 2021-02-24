@@ -1,6 +1,6 @@
 info() {
-    echo "Getting Skpr info for $SKPR_ENV"
     # shellcheck disable=SC2086
+    echo "Getting Skpr info for $SKPR_ENV"
     SKPR_DOMAIN=$(skpr info $SKPR_ENV | jq -r ".Ingress.Domain")
     SKPR_URL="https://$SKPR_DOMAIN"
     echo "Skpr URL: $SKPR_URL"
