@@ -4,7 +4,7 @@ deploy() {
         # shellcheck disable=SC2086
         echo "export SKPR_VERSION=$SKPR_VERSION" >> $BASH_ENV
     fi
-    echo "Packaging version: ${SKPR_VERSION}"
+    echo "Deploying version: ${SKPR_VERSION}"
     # shellcheck disable=SC2086
     skpr deploy ${SKPR_ENV} ${SKPR_VERSION}
 }
