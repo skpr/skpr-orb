@@ -1,0 +1,15 @@
+description: >
+  Restores the latest backup available of an environment to Skpr.
+
+parameters:
+  env:
+    type: string
+    default: ""
+    description: "The app environment"
+
+steps:
+  - run:
+      environment:
+        SKPR_ENV: <<parameters.env>>
+      name: Skpr Deploy
+      command: <<include(scripts/restore-latest.sh)>>
