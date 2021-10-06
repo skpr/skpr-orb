@@ -1,6 +1,6 @@
 restore() {
     if [ -z "${SKPR_BACKUP}" ]; then
-        SKPR_BACKUP=$(skpr backup list "${SKPR_SOURCE}" --json | jq .[0].Name)
+        SKPR_BACKUP=$(skpr backup list "${SKPR_SOURCE}" --json | jq  -r '[.][0][0].Name')
         if [ $? -gt 0 ]; then
           echo "Failed to get name of most recent backup"
           exit 1
