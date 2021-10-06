@@ -10,6 +10,11 @@ restore() {
     fi
     echo "Restoring backup '${SKPR_BACKUP}' to ${SKPR_TARGET}"
 
+    if [ -z "${SKPR_SOURCE}" ] || [ -z "${SKPR_TARGET}" ]; then
+      echo "Failed: Source/Target environments are empty - cannot restore backup"
+      exit 1
+    fi
+
     # shellcheck disable=SC2086
     skpr restore create ${SKPR_TARGET} ${SKPR_BACKUP}
 }

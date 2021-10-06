@@ -10,11 +10,16 @@ parameters:
     type: string
     default: ""
     description: "The target environment to restore the backup to"
+  backup:
+    type: string
+    default: ""
+    description: "If applicable, the backup name to restore"
 
 steps:
   - run:
       environment:
         SKPR_SOURCE: <<parameters.source>>
         SKPR_TARGET: <<parameters.target>>
-      name: Skpr Deploy
-      command: <<include(scripts/restore-latest.sh)>>
+        SKPR_BACKUP: <<parameters.backup>>
+      name: Skpr Restore
+      command: <<include(scripts/restore.sh)>>
