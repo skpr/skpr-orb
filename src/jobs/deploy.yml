@@ -4,6 +4,10 @@ description: >
 executor: cli
 
 parameters:
+  docker-version:
+    type: string
+    default: "20.10.11"
+    description: Docker version override
   env:
     type: string
     default: ""
@@ -28,7 +32,9 @@ parameters:
 
 steps:
   - checkout
-  - setup_remote_docker
+  - setup_remote_docker:
+      version: <<parameters.docker-version>>
+      docker_layer_caching: true
   - when:
       condition: <<parameters.package>>
       steps:
