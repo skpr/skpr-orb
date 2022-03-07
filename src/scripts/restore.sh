@@ -8,7 +8,7 @@ restore() {
 			exit 1
 		fi
 		# shellcheck disable=SC2086
-		echo "export SKPR_BACKUP=SKPR_BACKUP" >>$BASH_ENV
+		echo "export SKPR_BACKUP=${SKPR_BACKUP}" >>$BASH_ENV
 	fi
 	echo "Restoring backup '${SKPR_BACKUP}' to ${SKPR_TARGET}"
 
