@@ -39,7 +39,6 @@ steps:
   - setup_remote_docker:
       version: <<parameters.docker-version>>
       docker_layer_caching: true
-  - steps: <<parameters.pre-deploy>>
   - when:
       condition: <<parameters.package>>
       steps:
@@ -47,6 +46,7 @@ steps:
         - package
   - info:
       env: <<parameters.env>>
+  - steps: <<parameters.pre-deploy>>
   - deploy:
       env: <<parameters.env>>
   - steps: <<parameters.post-deploy>>
