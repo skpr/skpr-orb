@@ -1,11 +1,19 @@
 description: >
-  The following example shows a typical dev, stg, prod deployment workflow, running post-deployment steps in the env.
+  The following example shows a typical dev, stg, prod deployment workflow, running pre and post-deployment steps in the env.
 
 usage:
   version: 2.1
   orbs:
     skpr: skpr/skpr@1.0.0
   commands:
+    skpr-pre-deploy:
+      parameters:
+        env:
+          type: string
+      steps:
+        - run:
+            name: Skpr Pre-Deploy
+            command: skpr exec << parameters.env >> -- make deploy-prepare
     skpr-post-deploy:
       parameters:
         env:
@@ -21,6 +29,8 @@ usage:
             name: deploy_dev
             context: skpr-example
             env: dev
+            pre-deploy:
+              - skpr-pre-deploy: { env: dev }
             post-deploy:
               - skpr-post-deploy: { env: dev }
             filters:

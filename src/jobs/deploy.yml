@@ -24,6 +24,10 @@ parameters:
     type: boolean
     default: true
     description: Whether to package before deploying.
+  pre-deploy:
+    type: steps
+    description: Provide any optional pre-deploy steps you would like to run.
+    default: []
   post-deploy:
     type: steps
     description: Provide any optional post-deploy steps you would like to run.
@@ -42,6 +46,7 @@ steps:
         - package
   - info:
       env: <<parameters.env>>
+  - steps: <<parameters.pre-deploy>>
   - deploy:
       env: <<parameters.env>>
   - steps: <<parameters.post-deploy>>
