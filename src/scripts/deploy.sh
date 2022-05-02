@@ -1,6 +1,12 @@
 deploy() {
     if [ -z "${SKPR_VERSION}" ]; then
-        SKPR_VERSION=$(git describe --tags --always)
+        if [ -z "${CIRCLE_TAG}" ]; then
+          echo "Falling back to 'git describe' to determine version."
+          SKPR_VERSION=$(git describe --tags --always)
+        else
+          echo "Using 'CIRCLE_TAG' to determine version."
+          SKPR_VERSION=${CIRCLE_TAG}
+        fi
         # shellcheck disable=SC2086
         echo "export SKPR_VERSION=$SKPR_VERSION" >> $BASH_ENV
     fi
