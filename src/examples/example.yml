@@ -35,7 +35,7 @@ usage:
               - skpr-post-deploy: { env: dev }
             filters:
               branches:
-                only: master
+                only: main
         - skpr/deploy:
             name: deploy_stg
             context: skpr-example

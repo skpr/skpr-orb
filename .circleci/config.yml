@@ -97,5 +97,5 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
                 - main
