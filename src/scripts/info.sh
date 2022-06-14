@@ -1,6 +1,6 @@
 info() {
     # shellcheck disable=SC2086
-    if [ ! -z "${SKPR_WORKDIR}" ]; then
+    if [ -n "${SKPR_WORKDIR}" ]; then
       cd ${SKPR_WORKDIR} || false;
     fi
     echo "Getting Skpr info for $SKPR_ENV"
