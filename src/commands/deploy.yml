@@ -10,11 +10,16 @@ parameters:
     type: string
     default: ""
     description: "The app environment"
+  workdir:
+    type: string
+    default: ""
+    description: "Working directory of skpr project"
 
 steps:
   - run:
       environment:
         SKPR_VERSION: <<parameters.version>>
         SKPR_ENV: <<parameters.env>>
+        SKPR_WORKDIR: <<parameters.workdir>>
       name: Skpr Deploy
       command: <<include(scripts/deploy.sh)>>

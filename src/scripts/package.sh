@@ -10,6 +10,9 @@ package() {
         # shellcheck disable=SC2086
         echo "export SKPR_VERSION=$SKPR_VERSION" >> $BASH_ENV
     fi
+    if [ ! -z "${SKPR_WORKDIR}" ]; then
+      cd ${SKPR_WORKDIR};
+    fi
     echo "Packaging version: ${SKPR_VERSION}"
     # shellcheck disable=SC2086
     skpr package ${SKPR_VERSION}

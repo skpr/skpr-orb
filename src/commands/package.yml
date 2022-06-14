@@ -6,10 +6,15 @@ parameters:
     type: string
     default: ""
     description: "The app version"
+  workdir:
+    type: string
+    default: ""
+    description: "Working directory of skpr project"
 
 steps:
   - run:
       environment:
         PARAM_VERSION: <<parameters.version>>
+        SKPR_WORKDIR: <<parameters.workdir>>
       name: Skpr Package
       command: <<include(scripts/package.sh)>>
