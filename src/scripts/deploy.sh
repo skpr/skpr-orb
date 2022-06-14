@@ -11,7 +11,7 @@ deploy() {
         echo "export SKPR_VERSION=$SKPR_VERSION" >> $BASH_ENV
     fi
     if [ -n "${SKPR_WORKDIR}" ]; then
-      cd ${SKPR_WORKDIR} || false;
+      cd "${SKPR_WORKDIR}" || false;
     fi
     echo "Deploying version: ${SKPR_VERSION}"
     # shellcheck disable=SC2086

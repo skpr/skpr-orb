@@ -1,7 +1,7 @@
 info() {
     # shellcheck disable=SC2086
     if [ -n "${SKPR_WORKDIR}" ]; then
-      cd ${SKPR_WORKDIR} || false;
+      cd "${SKPR_WORKDIR}" || false;
     fi
     echo "Getting Skpr info for $SKPR_ENV"
     SKPR_DOMAIN=$(skpr info $SKPR_ENV | jq -r ".Ingress.Domain")
