@@ -16,10 +16,10 @@ restore() {
 		exit 1
 	fi
 
-  if [ -z "${SKPR_TARGET}" ]; then
-    echo "Failed: Target environment is empty - cannot restore backup"
-    exit 1
-  fi
+	if [ -z "${SKPR_TARGET}" ]; then
+		echo "Failed: Target environment is empty - cannot restore backup"
+		exit 1
+	fi
 
 	# shellcheck disable=SC2086
 	skpr restore create ${SKPR_TARGET} ${SKPR_BACKUP}
