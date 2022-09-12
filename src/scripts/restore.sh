@@ -3,7 +3,7 @@
 restore() {
 	SKPR_BACKUP=$(skpr backup list "${SKPR_SOURCE}" --json | jq -r '[.][0][0].Name')
 	if $? -gt 0; then
-			echo "Failed to get name of most recent backup"
+		echo "Failed to get name of most recent backup"
 		exit 1
 	fi
 	# shellcheck disable=SC2086
