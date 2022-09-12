@@ -4,22 +4,15 @@ description: >
 parameters:
   source:
     type: string
-    default: ""
     description: "The source environment to grab the backup from"
   target:
     type: string
-    default: ""
     description: "The target environment to restore the backup to"
-  backup:
-    type: string
-    default: ""
-    description: "If you don't want the latest backup to be chosen, what is the backup name you are restoring"
 
 steps:
   - run:
       environment:
         SKPR_SOURCE: <<parameters.source>>
         SKPR_TARGET: <<parameters.target>>
-        SKPR_BACKUP: <<parameters.backup>>
       name: Skpr Restore
       command: <<include(scripts/restore.sh)>>
