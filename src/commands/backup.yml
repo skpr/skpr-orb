@@ -1,0 +1,14 @@
+description: >
+  Create a backup of an environment.
+
+parameters:
+  target:
+    type: string
+    description: "The target environment to create a backup from"
+
+steps:
+  - run:
+      environment:
+        SKPR_TARGET: <<parameters.target>>
+      name: Skpr Backup
+      command: <<include(scripts/backup.sh)>>
