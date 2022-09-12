@@ -13,7 +13,7 @@ parameters:
   backup:
     type: string
     default: ""
-    description: "If applicable, the backup name to restore"
+    description: "If you don't want the latest backup to be chosen, what is the backup name you are restoring"
 
 steps:
   - run:
