@@ -10,7 +10,7 @@ restore() {
 	echo "export SKPR_BACKUP=${SKPR_BACKUP}" >>$BASH_ENV
 
 	# shellcheck disable=SC2086
-	skpr restore create ${SKPR_TARGET} ${SKPR_BACKUP}
+	skpr restore create --wait ${SKPR_TARGET} ${SKPR_BACKUP}
 }
 
 # Will not run if sourced for bats-core tests.
