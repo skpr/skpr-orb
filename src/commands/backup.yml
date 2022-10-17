@@ -5,6 +5,10 @@ parameters:
   target:
     type: string
     description: "The target environment to create a backup from"
+  timeout:
+    type: string
+    description: "How long to wait for the build to complete"
+    default: "1h"
 
 steps:
   - run:
@@ -12,3 +16,4 @@ steps:
         SKPR_TARGET: <<parameters.target>>
       name: Skpr Backup
       command: <<include(scripts/backup.sh)>>
+      no_output_timeout: <<parameters.timeout>>
