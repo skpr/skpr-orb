@@ -13,6 +13,10 @@ package() {
     echo "Packaging version: ${SKPR_VERSION}"
     # shellcheck disable=SC2086
     skpr package ${SKPR_VERSION}
+    if [ "${PARAM_TRIVY}" == "true" ];
+      skpr package ${SKPR_VERSION} --no-push --print-manifest > manifect.json
+      cat manifest.json | /usr/bin/jq -c '.[] | select(.type == "runtime") | .tag' -r | xargs -i  sh -c 'trivy image {}'
+    fi
 }
 
 # Will not run if sourced for bats-core tests.

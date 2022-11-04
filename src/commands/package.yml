@@ -6,10 +6,15 @@ parameters:
     type: string
     default: ""
     description: "The app version"
+  trivy:
+    type: boolean
+    default: false
+    description: "Use trivy to scan the manifests"
 
 steps:
   - run:
       environment:
         PARAM_VERSION: <<parameters.version>>
+        PARAM_TRIVY: <<parameters.trivy>>
       name: Skpr Package
       command: <<include(scripts/package.sh)>>
