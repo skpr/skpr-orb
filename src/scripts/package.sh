@@ -14,8 +14,8 @@ package() {
     # shellcheck disable=SC2086
     skpr package ${SKPR_VERSION}
     if [ "${PARAM_TRIVY}" == "true" ]; then
-      skpr package ${SKPR_VERSION} --no-push --print-manifest > manifest.json
-      cat manifest.json | jq -c '.[] | select(.type == "runtime") | .tag' -r | xargs -i  sh -c 'trivy image {} --format=json'
+      skpr package "${SKPR_VERSION}" --no-push --print-manifest > manifest.json
+      cat < manifest.json | jq -c '.[] | select(.type == "runtime") | .tag' -r | xargs -i  sh -c 'trivy image {} --format=json'
     fi
 }
 
