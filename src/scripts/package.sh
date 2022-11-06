@@ -15,7 +15,7 @@ package() {
     skpr package ${SKPR_VERSION}
     if [ "${PARAM_TRIVY}" == "true" ]; then
       skpr package "${SKPR_VERSION}" --no-push --print-manifest > manifest.json
-      cat < manifest.json | jq -c '.[] | select(.type == "runtime") | .tag' -r | xargs -i  sh -c 'trivy image {} --format=json'
+      cat < manifest.json | jq -c '.[] | select(.type == "runtime") | .tag' -r | xargs -i  sh -c 'trivy image {}'
     fi
 }
 
