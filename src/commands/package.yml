@@ -13,11 +13,11 @@ parameters:
   trivy_file:
     type: string
     default: ""
-    description: "The filepath to pass onto trivy, conflicts with image_type."
+    description: "The filepath to pass onto trivy, conflicts with trivy_image."
   trivy_image:
     type: string
     default: ""
-    description: "The image type to scan. Conflicts with filepaths, and must be either 'compile' or 'runtime'."
+    description: "The image type to scan. Conflicts with trivy_file, and must be either 'compile' or 'runtime'."
 
 steps:
   - run:
