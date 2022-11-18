@@ -10,11 +10,21 @@ parameters:
     type: boolean
     default: false
     description: "Use trivy to scan the manifests"
+  trivy_file:
+    type: string
+    default: ""
+    description: "The filepath to pass onto trivy, conflicts with image_type."
+  trivy_image:
+    type: string
+    default: ""
+    description: "The image type to scan. Conflicts with filepaths, and must be either 'compile' or 'runtime'."
 
 steps:
   - run:
       environment:
         PARAM_VERSION: <<parameters.version>>
         PARAM_TRIVY: <<parameters.trivy>>
+        PARAM_TRIVY_IMAGE: <<parameters.trivy_image>>
+        PARAM_TRIVY_FILE: <<parameters.trivy_file>>
       name: Skpr Package
       command: <<include(scripts/package.sh)>>

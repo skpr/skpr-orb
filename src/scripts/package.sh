@@ -12,10 +12,39 @@ package() {
     fi
     echo "Packaging version: ${SKPR_VERSION}"
     # shellcheck disable=SC2086
-    skpr package ${SKPR_VERSION}
+    skpr package "${SKPR_VERSION}" --print-manifest > manifest.json
+
     if [ "${PARAM_TRIVY}" == "true" ]; then
-      skpr package "${SKPR_VERSION}" --no-push --print-manifest > manifest.json
-      cat < manifest.json | jq -c '.[] | select(.type == "runtime") | .tag' -r | xargs -i  sh -c 'trivy image {}'
+
+      # Check if both Trivy options are set.
+      if [ ! "${PARAM_TRIVY_FILE}" == "" ] && [ ! "${PARAM_TRIVY_IMAGE}" == "" ]; then
+        echo "Image and File system values have been set, please call the Skpr orb with only one.";
+        exit 1;
+      fi
+
+      # Check if both Trivy options are empty/unset.
+      if [ "${PARAM_TRIVY_FILE}" == "" ] && [ "${PARAM_TRIVY_IMAGE}" == "" ]; then
+        echo "No configuration value has been set, applying defaults...";
+        PARAM_TRIVY_IMAGE="runtime"
+      fi
+
+      # Perform file scanning
+      if [ ! "${PARAM_TRIVY_FILE}" == "" ]; then
+          if [ ! -f "${PARAM_TRIVY_FILE}" ]; then
+            echo "Input file does not exist at path: ${PARAM_TRIVY_FILE}";
+          fi
+          sh -c "trivy fs ${PARAM_TRIVY_FILE}";
+      fi
+
+      # Perform image scanning
+      if [ ! "${PARAM_TRIVY_IMAGE}" == "" ]; then
+        # Validate input options
+        if [ ! "${PARAM_TRIVY_IMAGE}" == "compile" ] && [ ! "${PARAM_TRIVY_IMAGE}" == "runtime" ]; then
+          echo "Invalid value specified for image reference, expected 'compile' or runtime' but got '${PARAM_TRIVY_IMAGE}'.";
+        fi
+        # Scan the image.
+        cat < manifest.json | jq -c ".[]" | jq "select(.type == \"${PARAM_TRIVY_IMAGE}\")" | jq  '.tag' -r | xargs -n1 sh -c "trivy image $0";
+      fi
     fi
 }
 
