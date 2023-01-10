@@ -2,7 +2,19 @@
 
 backup() {
 	# shellcheck disable=SC2086
-	skpr mysql image pull ${SKPR_ENVIRONMENT}
+	if [[ "$SKPR_CLI_USE_DOCKER_IMAGE" = "true" ]]
+	then
+		docker run -it \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v $(pwd):$(pwd) \
+            -w $(pwd) \
+            -e SKPR_USERNAME=$SKPR_USERNAME \
+            -e SKPR_PASSWORD=$SKPR_PASSWORD \
+            skpr/cli:${SKPR_CLI_DOCKER_IMAGE} \
+            skpr mysql image pull dev
+	else
+		skpr mysql image pull ${SKPR_ENVIRONMENT}
+	fi
 }
 
 # Will not run if sourced for bats-core tests.
