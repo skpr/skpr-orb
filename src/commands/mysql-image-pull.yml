@@ -1,0 +1,19 @@
+description: >
+  Pull a MySQL Database Image
+
+parameters:
+  environment:
+    type: string
+    description: "Environment to pull the MySQL image from"
+  timeout:
+    type: string
+    description: "How long to wait for the step to complete"
+    default: "1h"
+
+steps:
+  - run:
+      environment:
+        SKPR_ENVIRONMENT: <<parameters.environment>>
+      name: Skpr MySQL Image Pull
+      command: <<include(scripts/mysql-image-pull.sh)>>
+      no_output_timeout: <<parameters.timeout>>
