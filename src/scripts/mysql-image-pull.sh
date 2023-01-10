@@ -10,7 +10,7 @@ backup() {
             -w "$(pwd)" \
             -e SKPR_USERNAME=${SKPR_USERNAME} \
             -e SKPR_PASSWORD=${SKPR_PASSWORD} \
-            skpr/cli:${SKPR_CLI_DOCKER_IMAGE} \
+            ${SKPR_CLI_DOCKER_IMAGE} \
             skpr mysql image pull dev
 	else
 		skpr mysql image pull ${SKPR_ENVIRONMENT}
