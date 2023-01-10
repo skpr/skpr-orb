@@ -6,10 +6,10 @@ backup() {
 	then
 		docker run -it \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            -v $(pwd):$(pwd) \
-            -w $(pwd) \
-            -e SKPR_USERNAME=$SKPR_USERNAME \
-            -e SKPR_PASSWORD=$SKPR_PASSWORD \
+            -v "$(pwd):$(pwd)" \
+            -w "$(pwd)" \
+            -e SKPR_USERNAME=${SKPR_USERNAME} \
+            -e SKPR_PASSWORD=${SKPR_PASSWORD} \
             skpr/cli:${SKPR_CLI_DOCKER_IMAGE} \
             skpr mysql image pull dev
 	else
