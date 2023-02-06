@@ -1,4 +1,4 @@
-package() {
+trivy_file_scan() {
 
   if [ "${PARAM_FILE}" == "" ]; then
     echo "Input file path has not been set.";
@@ -17,5 +17,5 @@ package() {
 # View src/tests for more information.
 ORB_TEST_ENV="bats-core"
 if [ "${0#*$ORB_TEST_ENV}" == "$0" ]; then
-    package
+    trivy_file_scan
 fi

@@ -1,5 +1,5 @@
 # shellcheck disable=SC2120,SC2148
-package() {
+trivy_image_scan() {
 
   if [ "${PARAM_TYPE}" == "" ]; then
     echo "Input file path has not been set.";
@@ -7,7 +7,7 @@ package() {
   fi
 
   if [ "${PARAM_TYPE}" == "compile" ]; then
-    cat < kpr-manifest.json | jq -c ".[]" | jq "select(.type == \"compile\")" | jq  '.tag' -r | xargs -n1 trivy image $1;
+    cat < skpr-manifest.json | jq -c ".[]" | jq "select(.type == \"compile\")" | jq  '.tag' -r | xargs -n1 trivy image $1;
   fi
 
   if [ "${PARAM_TYPE}" == "runtime" ]; then
@@ -25,5 +25,5 @@ package() {
 # View src/tests for more information.
 ORB_TEST_ENV="bats-core"
 if [ "${0#*$ORB_TEST_ENV}" == "$0" ]; then
-    package
+    trivy_image_scan
 fi
