@@ -11,5 +11,5 @@ steps:
   - run:
       environment:
         PARAM_TYPE: <<parameters.type>>
-      name: "Trivy: Scan Image  "
+      name: "Trivy: Scan Image"
       command: <<include(scripts/trivy_image_scan.sh)>>
