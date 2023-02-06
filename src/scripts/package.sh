@@ -10,9 +10,12 @@ package() {
         # shellcheck disable=SC2086
         echo "export SKPR_VERSION=$SKPR_VERSION" >> $BASH_ENV
     fi
-    echo "Packaging version: ${SKPR_VERSION}"
-    # shellcheck disable=SC2086
-    skpr package ${SKPR_VERSION}
+
+    if [ ! "${PARAM_PACKAGE_SKIP}" == "1" ]; then
+      echo "Packaging version: ${SKPR_VERSION}"
+      # shellcheck disable=SC2086
+      skpr package "${SKPR_VERSION}" --print-manifest > skpr-manifest.json
+    fi
 }
 
 # Will not run if sourced for bats-core tests.

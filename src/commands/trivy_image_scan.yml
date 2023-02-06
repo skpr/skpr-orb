@@ -1,0 +1,15 @@
+description: >
+  Packages an app for deployment.
+
+parameters:
+  type:
+    type: string
+    default: ""
+    description: "The image type to pass onto trivy. Must be either 'compile' or 'runtime'."
+
+steps:
+  - run:
+      environment:
+        PARAM_TYPE: <<parameters.type>>
+      name: "Trivy: Scan Image"
+      command: <<include(scripts/trivy_image_scan.sh)>>

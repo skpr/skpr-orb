@@ -1,0 +1,15 @@
+description: >
+  Packages an app for deployment.
+
+parameters:
+  file:
+    type: string
+    default: ""
+    description: "The filepath to pass onto trivy."
+
+steps:
+  - run:
+      environment:
+        PARAM_FILE: <<parameters.file>>
+      name: "Trivy: File Scan"
+      command: <<include(scripts/trivy_file_scan.sh)>>
