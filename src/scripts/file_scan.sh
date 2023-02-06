@@ -10,6 +10,7 @@ package() {
   fi
 
   trivy fs "${PARAM_FILE}";
+
 }
 
 # Will not run if sourced for bats-core tests.

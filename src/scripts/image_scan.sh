@@ -1,3 +1,4 @@
+# shellcheck disable=SC2120,SC2148
 package() {
 
   if [ "${PARAM_TYPE}" == "" ]; then
@@ -6,17 +7,18 @@ package() {
   fi
 
   if [ "${PARAM_TYPE}" == "compile" ]; then
-    cat < kpr-manifest.json | jq -c ".[]" | jq "select(.type == \"compile\")" | jq  '.tag' -r | xargs -n1 trivy image "${1}";
+    cat < kpr-manifest.json | jq -c ".[]" | jq "select(.type == \"compile\")" | jq  '.tag' -r | xargs -n1 trivy image $1;
   fi
 
   if [ "${PARAM_TYPE}" == "runtime" ]; then
-    cat < skpr-manifest.json | jq -c ".[]" | jq "select(.type == \"runtime\")" | jq  '.tag' -r | xargs -n1 trivy image "${1}";
+    cat < skpr-manifest.json | jq -c ".[]" | jq "select(.type == \"runtime\")" | jq  '.tag' -r | xargs -n1 trivy image $1;
   fi
 
   if [ ! "${PARAM_TYPE}" == "compile" ] && [ ! "${PARAM_TYPE}" == "runtime" ]; then
     echo "Invalid image category.";
     exit 1;
   fi
+
 }
 
 # Will not run if sourced for bats-core tests.
