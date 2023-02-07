@@ -1,0 +1,25 @@
+description: >
+  Configure the settings file for a StackHawk scan.
+
+parameters:
+  env:
+    type: string
+    default: "CI"
+    description: "The environment to view the dataset on in StackHawk's interface."
+  id:
+    type: string
+    default: ""
+    description: "The ID of the application you're intending to scan using StackHawk."
+  host:
+    type: string
+    default: "CI"
+    description: "The endpoint which will be scanned by StackHawk."
+
+steps:
+  - run:
+      environment:
+        PARAM_ENV: <<parameters.env>>
+        PARAM_ID: <<parameters.id>>
+        PARAM_HOST: <<parameters.endpoint>>
+      name: "StackHawk: Configure"
+      command: <<include(scripts/stackhawk_configure.sh)>>

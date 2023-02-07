@@ -1,0 +1,15 @@
+description: >
+  Scan an application using StackHawk
+
+parameters:
+  api_key:
+    type: string
+    default: ""
+    description: "The API Key, used to authenticate and upload scan results to StackHawk's interface."
+
+steps:
+  - run:
+      environment:
+        PARAM_KEY: <<parameters.api_key>>
+      name: "StackHawk: Scan Application"
+      command: <<include(scripts/stackhawk_scan.sh)>>
