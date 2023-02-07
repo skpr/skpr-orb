@@ -1,4 +1,4 @@
-stackhawk_config_set() {
+stackhawk_configure() {
 
   if [ "${PARAM_ID}" == "" ]; then
     echo "Application ID was not provided.";
@@ -22,5 +22,5 @@ stackhawk_config_set() {
 # View src/tests for more information.
 ORB_TEST_ENV="bats-core"
 if [ "${0#*$ORB_TEST_ENV}" == "$0" ]; then
-    stackhawk_config_set
+    stackhawk_configure
 fi
