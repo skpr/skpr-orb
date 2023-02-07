@@ -12,5 +12,5 @@ stackhawk_scan() {
 # View src/tests for more information.
 ORB_TEST_ENV="bats-core"
 if [ "${0#*$ORB_TEST_ENV}" == "$0" ]; then
-    trivy_file_scan
+    stackhawk_scan
 fi
