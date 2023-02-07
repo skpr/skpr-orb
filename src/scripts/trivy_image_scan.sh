@@ -1,4 +1,5 @@
-# shellcheck disable=SC2120,SC2148
+#!/usr/env bash
+# shellcheck disable=SC2120
 trivy_image_scan() {
 
   if [ "${PARAM_TYPE}" == "" ]; then

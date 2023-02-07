@@ -1,3 +1,5 @@
+#!/usr/env bash
+
 stackhawk_configure() {
 
   if [ "${PARAM_ID}" == "" ]; then

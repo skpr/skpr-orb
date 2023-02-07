@@ -1,3 +1,5 @@
+#!/usr/env bash
+
 stackhawk_scan() {
 
   if [ ! "${PARAM_KEY}" == "" ]; then

@@ -1,3 +1,5 @@
+#!/usr/env bash
+
 trivy_file_scan() {
 
   if [ "${PARAM_FILE}" == "" ]; then
