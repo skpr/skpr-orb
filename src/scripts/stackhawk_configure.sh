@@ -15,7 +15,7 @@ stackhawk_configure() {
   fi
 
   echo "Creating configuration file at: $(pwd)/stackhawk.yml";
-  echo "{'app': {'applicationId': '${PARAM_ID}', 'env': '${PARAM_ENV}', 'host': '${PARAM_HOST}'}}" | yq --yaml-output > ./stackhawk.yml;
+  echo "{'app': {'applicationId': '${PARAM_ID}', 'env': '${PARAM_ENV}', 'host': '${PARAM_HOST}', 'includePaths': ${PARAM_PATHS} }" | yq --yaml-output > ./stackhawk.yml;
   cat ./stackhawk.yml;
 
 }
