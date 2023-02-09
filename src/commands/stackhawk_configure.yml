@@ -17,14 +17,14 @@ parameters:
   paths:
     type: string
     default: "['/']"
-    description: "Paths as a list in JSON format contained in single quotes ('') or escaped double quotes (\"\")."
+    description: "Paths as a list in JSON format contained in single quotes ('') or escaped double quotes (\"\"). Example: ['/', '/my/example/content']"
 
 steps:
   - run:
       environment:
         PARAM_ENV: <<parameters.env>>
         PARAM_ID: <<parameters.id>>
-        PARAM_HOST: <<parameters.endpoint>>
+        PARAM_HOST: <<parameters.host>>
         PARAM_PATHS: <<parameters.paths>>
       name: "StackHawk: Configure"
       command: <<include(scripts/stackhawk_configure.sh)>>
