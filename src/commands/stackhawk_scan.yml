@@ -16,4 +16,4 @@ steps:
           -e API_KEY=<<parameters.api_key>> \
           --network=host \
           --volume=$(pwd)/:/hawk \
-          stackhawk/hawkscan 
+          stackhawk/hawkscan
