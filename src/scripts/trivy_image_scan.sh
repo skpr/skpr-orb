@@ -1,4 +1,3 @@
-#!/usr/env bash
 # shellcheck disable=SC2120
 trivy_image_scan() {
 
