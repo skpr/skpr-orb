@@ -1,4 +1,4 @@
-# shellcheck disable=SC2120
+# shellcheck disable=SC2120,SC2148
 trivy_image_scan() {
 
   if [ "${PARAM_TYPE}" == "" ]; then
