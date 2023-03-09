@@ -1,6 +1,7 @@
 #!/bin/env bash
 
-backup() {
+exec() {
+  echo "Running '${SKPR_CMD}'"
   docker run --rm \
           -v /var/run/docker.sock:/var/run/docker.sock \
           -v "$(pwd):$(pwd)" \
@@ -8,7 +9,7 @@ backup() {
           -e SKPR_USERNAME="${SKPR_USERNAME}" \
           -e SKPR_PASSWORD="${SKPR_PASSWORD}" \
           "${SKPR_CLI_DOCKER_IMAGE}" \
-          skpr backup create --wait "${SKPR_TARGET}";
+          skpr exec "${SKPR_ENV}" -- "${SKPR_CMD}";
 }
 
 # Will not run if sourced for bats-core tests.
@@ -16,5 +17,5 @@ backup() {
 ORB_TEST_ENV="bats-core"
 # shellcheck disable=SC2295
 if [ "${0#*$ORB_TEST_ENV}" == "$0" ]; then
-	backup
+	exec
 fi

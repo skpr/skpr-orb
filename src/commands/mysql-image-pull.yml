@@ -1,0 +1,24 @@
+description: >
+  Pull a MySQL Database Image
+
+parameters:
+  docker_image_tag:
+    default: "skpr/cli:latest"
+    description: "The Skpr CLI version tag"
+    type: string
+  environment:
+    description: "Environment to pull the MySQL image from"
+    type: string
+  timeout:
+    default: "1h"
+    description: "How long to wait for the step to complete"
+    type: string
+
+steps:
+  - run:
+      environment:
+        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image_tag>>
+        SKPR_ENVIRONMENT: <<parameters.environment>>
+      name: Skpr MySQL Image Pull
+      command: <<include(scripts/mysql-image-pull.sh)>>
+      no_output_timeout: <<parameters.timeout>>

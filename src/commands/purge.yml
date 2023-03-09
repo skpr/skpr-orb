@@ -1,5 +1,5 @@
 description: >
-  Gets Skpr environment information.
+  Creates a Skpr purge request.
 
 parameters:
   docker_image_tag:
@@ -10,11 +10,19 @@ parameters:
     type: string
     default: ""
     description: "The app environment"
+  path:
+    type: string
+    description: "Paths to purge on the app."
+  title:
+    type: string
+    description: "Tile of the job to appear in CircleCI's interface."
+    default: "Skpr Purge"
 
 steps:
   - run:
       environment:
         SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image_tag>>
         SKPR_ENV: <<parameters.env>>
-      name: Skpr Info
-      command: <<include(scripts/info.sh)>>
+        SKPR_PATH: <<parameters.path>>
+      name: <<parameters.title>>
+      command: <<include(scripts/purge.sh)>>

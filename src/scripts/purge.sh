@@ -1,6 +1,7 @@
 #!/bin/env bash
 
-backup() {
+purge() {
+  echo "Purging path '${SKPR_PATH}' on environment '${SKPR_ENV}..."
   docker run --rm \
           -v /var/run/docker.sock:/var/run/docker.sock \
           -v "$(pwd):$(pwd)" \
@@ -8,7 +9,7 @@ backup() {
           -e SKPR_USERNAME="${SKPR_USERNAME}" \
           -e SKPR_PASSWORD="${SKPR_PASSWORD}" \
           "${SKPR_CLI_DOCKER_IMAGE}" \
-          skpr backup create --wait "${SKPR_TARGET}";
+          skpr purge create "${SKPR_ENVIRONMENT}" "${SKPR_PATH}";
 }
 
 # Will not run if sourced for bats-core tests.
@@ -16,5 +17,5 @@ backup() {
 ORB_TEST_ENV="bats-core"
 # shellcheck disable=SC2295
 if [ "${0#*$ORB_TEST_ENV}" == "$0" ]; then
-	backup
+	purge
 fi
