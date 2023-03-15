@@ -19,7 +19,7 @@ parameters:
   title:
     type: string
     description: "Tile of the job to appear in CircleCI's interface."
-    default: "Skpr Backup"
+    default: "Skpr Restore"
 
 steps:
   - run:
