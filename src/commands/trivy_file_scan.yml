@@ -2,14 +2,23 @@ description: >
   Packages an app for deployment.
 
 parameters:
+  docker_image:
+    default: "skpr/cli:latest"
+    description: "The Skpr CLI version tag"
+    type: string
   file:
     type: string
     default: ""
     description: "The filepath to pass onto trivy."
+  title:
+    type: string
+    description: "Tile of the job to appear in CircleCI's interface."
+    default: "Trivy: File Scan"
 
 steps:
   - run:
       environment:
+        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
         PARAM_FILE: <<parameters.file>>
-      name: "Trivy: File Scan"
+      name: <<parameters.title>>
       command: <<include(scripts/trivy_file_scan.sh)>>

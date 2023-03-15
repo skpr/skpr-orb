@@ -1,28 +1,34 @@
 description: >
-  Create a backup of an environment.
+  Execs a command via the Skpr CLI.
 
 parameters:
   docker_image:
     default: "skpr/cli:latest"
     description: "The Skpr CLI version tag"
     type: string
-  target:
+  env:
     type: string
-    description: "The target environment to create a backup from"
+    default: ""
+    description: "The app environment"
+  command:
+    type: string
+    default: ""
+    description: "The app command"
   timeout:
     type: string
-    description: "How long to wait for the build to complete"
-    default: "1h"
+    default: "10m"
+    description: "How long to wait for the step to complete"
   title:
     type: string
     description: "Tile of the job to appear in CircleCI's interface."
-    default: "Skpr Backup"
+    default: "Skpr Exec"
 
 steps:
   - run:
       environment:
         SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
-        SKPR_TARGET: <<parameters.target>>
+        SKPR_CMD: <<parameters.command>>
+        SKPR_ENV: <<parameters.env>>
       name: <<parameters.title>>
-      command: <<include(scripts/backup.sh)>>
+      command: <<include(scripts/exec.sh)>>
       no_output_timeout: <<parameters.timeout>>

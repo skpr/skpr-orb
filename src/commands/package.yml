@@ -2,6 +2,10 @@ description: >
   Packages an app for deployment.
 
 parameters:
+  docker_image:
+    default: "skpr/cli:latest"
+    description: "The Skpr CLI version tag"
+    type: string
   version:
     type: string
     default: ""
@@ -10,6 +14,7 @@ parameters:
 steps:
   - run:
       environment:
+        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
         PARAM_VERSION: <<parameters.version>>
       name: Skpr Package
       command: <<include(scripts/package.sh)>>

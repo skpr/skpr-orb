@@ -1,28 +1,28 @@
 description: >
-  Create a backup of an environment.
+  Creates a Skpr purge request.
 
 parameters:
   docker_image:
     default: "skpr/cli:latest"
     description: "The Skpr CLI version tag"
     type: string
-  target:
+  env:
     type: string
-    description: "The target environment to create a backup from"
-  timeout:
+    default: ""
+    description: "The app environment"
+  path:
     type: string
-    description: "How long to wait for the build to complete"
-    default: "1h"
+    description: "Paths to purge on the app."
   title:
     type: string
     description: "Tile of the job to appear in CircleCI's interface."
-    default: "Skpr Backup"
+    default: "Skpr Purge"
 
 steps:
   - run:
       environment:
         SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
-        SKPR_TARGET: <<parameters.target>>
+        SKPR_ENV: <<parameters.env>>
+        SKPR_PATH: <<parameters.path>>
       name: <<parameters.title>>
-      command: <<include(scripts/backup.sh)>>
-      no_output_timeout: <<parameters.timeout>>
+      command: <<include(scripts/purge.sh)>>

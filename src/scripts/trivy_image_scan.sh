@@ -1,3 +1,5 @@
+#!/bin/env bash
+
 # shellcheck disable=SC2120,SC2148
 trivy_image_scan() {
 
@@ -7,11 +9,34 @@ trivy_image_scan() {
   fi
 
   if [ "${PARAM_TYPE}" == "compile" ]; then
-    cat < skpr-manifest.json | jq -c ".[]" | jq "select(.type == \"compile\")" | jq  '.tag' -r | xargs -n1 trivy image $1;
+    cat < skpr-manifest.json | jq -c ".[]" | jq "select(.type == \"compile\")" | jq  '.tag' -r > manifest-target.txt
+    while IFS= read -r line
+    do
+      docker run --rm \
+              -v /var/run/docker.sock:/var/run/docker.sock \
+              -v "$(pwd):$(pwd)" \
+              -w "$(pwd)" \
+              -e SKPR_USERNAME="${SKPR_USERNAME}" \
+              -e SKPR_PASSWORD="${SKPR_PASSWORD}" \
+              "${SKPR_CLI_DOCKER_IMAGE}" \
+              trivy image "${line}";
+    done < manifest-target.txt
+
   fi
 
   if [ "${PARAM_TYPE}" == "runtime" ]; then
-    cat < skpr-manifest.json | jq -c ".[]" | jq "select(.type == \"runtime\")" | jq  '.tag' -r | xargs -n1 trivy image $1;
+    cat < skpr-manifest.json | jq -c ".[]" | jq "select(.type == \"runtime\")" | jq  '.tag' -r > manifest-target.txt
+    while IFS= read -r line
+    do
+      docker run --rm \
+              -v /var/run/docker.sock:/var/run/docker.sock \
+              -v "$(pwd):$(pwd)" \
+              -w "$(pwd)" \
+              -e SKPR_USERNAME="${SKPR_USERNAME}" \
+              -e SKPR_PASSWORD="${SKPR_PASSWORD}" \
+              "${SKPR_CLI_DOCKER_IMAGE}" \
+              trivy image "${line}";
+    done < manifest-target.txt
   fi
 
   if [ ! "${PARAM_TYPE}" == "compile" ] && [ ! "${PARAM_TYPE}" == "runtime" ]; then
@@ -24,6 +49,7 @@ trivy_image_scan() {
 # Will not run if sourced for bats-core tests.
 # View src/tests for more information.
 ORB_TEST_ENV="bats-core"
+# shellcheck disable=SC2295
 if [ "${0#*$ORB_TEST_ENV}" == "$0" ]; then
     trivy_image_scan
 fi
