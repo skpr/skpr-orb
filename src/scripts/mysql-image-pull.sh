@@ -8,7 +8,7 @@ mysql_image_pull() {
           -e SKPR_USERNAME="${SKPR_USERNAME}" \
           -e SKPR_PASSWORD="${SKPR_PASSWORD}" \
           "${SKPR_CLI_DOCKER_IMAGE}" \
-          skpr mysql image pull dev
+          skpr mysql image pull "${SKPR_ENV}"
 }
 
 # Will not run if sourced for bats-core tests.

@@ -2,7 +2,7 @@ description: >
   Deploys to Skpr.
 
 parameters:
-  docker_image_tag:
+  docker_image:
     default: "skpr/cli:latest"
     description: "The Skpr CLI version tag"
     type: string
@@ -22,7 +22,7 @@ parameters:
 steps:
   - run:
       environment:
-        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image_tag>>
+        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
         SKPR_VERSION: <<parameters.version>>
         SKPR_ENV: <<parameters.env>>
       name: <<parameters.title>>

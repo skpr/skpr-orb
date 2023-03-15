@@ -13,7 +13,6 @@ deploy() {
     fi
     echo "Deploying version: ${SKPR_VERSION}"
     docker run --rm \
-            -v /var/run/docker.sock:/var/run/docker.sock \
             -v "$(pwd):$(pwd)" \
             -w "$(pwd)" \
             -e SKPR_USERNAME="${SKPR_USERNAME}" \

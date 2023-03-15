@@ -2,7 +2,7 @@ description: >
   Packages an app for deployment.
 
 parameters:
-  docker_image_tag:
+  docker_image:
     default: "skpr/cli:latest"
     description: "The Skpr CLI version tag"
     type: string
@@ -14,7 +14,7 @@ parameters:
 steps:
   - run:
       environment:
-        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image_tag>>
+        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
         PARAM_TYPE: <<parameters.type>>
       name: "Trivy: Scan Image"
       command: <<include(scripts/trivy_image_scan.sh)>>

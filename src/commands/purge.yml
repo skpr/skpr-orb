@@ -2,7 +2,7 @@ description: >
   Creates a Skpr purge request.
 
 parameters:
-  docker_image_tag:
+  docker_image:
     default: "skpr/cli:latest"
     description: "The Skpr CLI version tag"
     type: string
@@ -21,7 +21,7 @@ parameters:
 steps:
   - run:
       environment:
-        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image_tag>>
+        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
         SKPR_ENV: <<parameters.env>>
         SKPR_PATH: <<parameters.path>>
       name: <<parameters.title>>

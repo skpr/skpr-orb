@@ -3,7 +3,6 @@
 purge() {
   echo "Purging path '${SKPR_PATH}' on environment '${SKPR_ENV}..."
   docker run --rm \
-          -v /var/run/docker.sock:/var/run/docker.sock \
           -v "$(pwd):$(pwd)" \
           -w "$(pwd)" \
           -e SKPR_USERNAME="${SKPR_USERNAME}" \
