@@ -8,7 +8,7 @@ purge() {
           -e SKPR_USERNAME="${SKPR_USERNAME}" \
           -e SKPR_PASSWORD="${SKPR_PASSWORD}" \
           "${SKPR_CLI_DOCKER_IMAGE}" \
-          skpr purge create "${SKPR_ENVIRONMENT}" "${SKPR_PATH}";
+          skpr purge create "${SKPR_ENV}" "${SKPR_PATH}";
 }
 
 # Will not run if sourced for bats-core tests.
