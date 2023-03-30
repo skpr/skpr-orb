@@ -8,6 +8,11 @@ trivy_image_scan() {
     exit 1;
   fi
 
+  if [ ! "${PARAM_TYPE}" == "compile" ] && [ ! "${PARAM_TYPE}" == "runtime" ]; then
+    echo "Invalid image category.";
+    exit 1;
+  fi
+
   if [ "${PARAM_TYPE}" == "compile" ] || [ "${PARAM_TYPE}" == "runtime" ]; then
     cat < "skpr-manifest-${PARAM_TYPE}.json" | jq -c ".[]" | jq "select(.type == \"${PARAM_TYPE}\")" | jq  '.tag' -r > "manifest-target-${PARAM_TYPE}.txt"
     while IFS= read -r line
@@ -21,11 +26,6 @@ trivy_image_scan() {
               "${SKPR_CLI_DOCKER_IMAGE}" \
               trivy image "${line}";
     done < "manifest-target-${PARAM_TYPE}.txt"
-  fi
-
-  if [ ! "${PARAM_TYPE}" == "compile" ] && [ ! "${PARAM_TYPE}" == "runtime" ]; then
-    echo "Invalid image category.";
-    exit 1;
   fi
 
 }
