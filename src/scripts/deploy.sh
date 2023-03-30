@@ -1,16 +1,6 @@
 #!/bin/env bash
 
 deploy() {
-    if [ -z "${SKPR_VERSION}" ]; then
-        if [ -z "${CIRCLE_TAG}" ]; then
-          echo "Falling back to 'git describe' to determine version."
-          SKPR_VERSION=$(git describe --tags --always)
-        else
-          echo "Using 'CIRCLE_TAG' to determine version."
-          SKPR_VERSION=${CIRCLE_TAG}
-        fi
-        echo "export SKPR_VERSION=$SKPR_VERSION" >> "${BASH_ENV}"
-    fi
     echo "Deploying version: ${SKPR_VERSION}"
     docker run --rm \
             -v "$(pwd):$(pwd)" \
