@@ -33,13 +33,13 @@ steps:
           -e SKPR_PASSWORD=${SKPR_PASSWORD} \
           <<parameters.docker_image>> \
           skpr backup list <<parameters.source>> --json > backups.json;
-        
+    
         SKPR_BACKUP=$(cat < backups.json | jq -r '[.][0][0].Name')
         if $? -gt 0; then
           echo "Failed to get name of most recent backup"
           exit 1
         fi
-      
+
         docker run --rm \
           -v /var/run/docker.sock:/var/run/docker.sock \
           -v "$(pwd)/project:$(pwd)" \
