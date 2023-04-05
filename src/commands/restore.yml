@@ -23,10 +23,28 @@ parameters:
 
 steps:
   - run:
-      environment:
-        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
-        SKPR_SOURCE: <<parameters.source>>
-        SKPR_TARGET: <<parameters.target>>
       name: <<parameters.title>>
-      command: <<include(scripts/restore.sh)>>
       no_output_timeout: <<parameters.timeout>>
+      command: |
+        docker run --rm \
+          -v "$(pwd):$(pwd)" \
+          -w "$(pwd)" \
+          -e SKPR_USERNAME=${SKPR_USERNAME} \
+          -e SKPR_PASSWORD=${SKPR_PASSWORD} \
+          <<parameters.docker_image>> \
+          skpr backup list <<parameters.source>> --json > backups.json;
+        
+        SKPR_BACKUP=$(cat < backups.json | jq -r '[.][0][0].Name')
+        if $? -gt 0; then
+          echo "Failed to get name of most recent backup"
+          exit 1
+        fi
+      
+        docker run --rm \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          -v "$(pwd)/project:$(pwd)" \
+          -w "$(pwd)" \
+          -e SKPR_USERNAME=${SKPR_USERNAME} \
+          -e SKPR_PASSWORD=${SKPR_PASSWORD} \
+          <<parameters.docker_image>> \
+          skpr restore create --wait <<parameters.target>> "${SKPR_BACKUP}";

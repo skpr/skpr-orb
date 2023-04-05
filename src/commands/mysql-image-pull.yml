@@ -16,9 +16,14 @@ parameters:
 
 steps:
   - run:
-      environment:
-        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
-        SKPR_ENV: <<parameters.env>>
       name: Skpr MySQL Image Pull
-      command: <<include(scripts/mysql-image-pull.sh)>>
       no_output_timeout: <<parameters.timeout>>
+      command: |
+        docker run -it \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          -v "$(pwd):$(pwd)" \
+          -w "$(pwd)" \
+          -e SKPR_USERNAME=${SKPR_USERNAME} \
+          -e SKPR_PASSWORD=${SKPR_PASSWORD} \
+          <<parameters.docker_image>> \
+          skpr mysql image pull <<parameters.env>>

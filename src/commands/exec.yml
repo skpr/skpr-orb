@@ -25,10 +25,14 @@ parameters:
 
 steps:
   - run:
-      environment:
-        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
-        SKPR_CMD: <<parameters.command>>
-        SKPR_ENV: <<parameters.env>>
       name: <<parameters.title>>
-      command: <<include(scripts/exec.sh)>>
       no_output_timeout: <<parameters.timeout>>
+      command: |
+        echo "Running  <<parameters.command>>"
+        docker run --rm \
+          -v "$(pwd):$(pwd)" \
+          -w "$(pwd)" \
+          -e SKPR_USERNAME=${SKPR_USERNAME} \
+          -e SKPR_PASSWORD=${SKPR_PASSWORD} \
+          <<parameters.docker_image>> \
+          skpr exec <<parameters.env>> -- <<parameters.command>>;

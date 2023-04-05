@@ -20,9 +20,13 @@ parameters:
 
 steps:
   - run:
-      environment:
-        SKPR_CLI_DOCKER_IMAGE: <<parameters.docker_image>>
-        SKPR_ENV: <<parameters.env>>
-        SKPR_PATH: <<parameters.path>>
       name: <<parameters.title>>
-      command: <<include(scripts/purge.sh)>>
+      command: |
+        echo "Purging path '<<parameters.path>>' on environment '<<parameters.env>>..."
+        docker run --rm \
+          -v "$(pwd):$(pwd)" \
+          -w "$(pwd)" \
+          -e SKPR_USERNAME=${SKPR_USERNAME} \
+          -e SKPR_PASSWORD=${SKPR_PASSWORD} \
+          <<parameters.docker_image>> \
+          skpr purge create <<parameters.env>> <<parameters.path>>;
