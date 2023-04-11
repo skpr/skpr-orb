@@ -14,7 +14,7 @@ steps:
   - run:
       name: Skpr Package
       command: |
-        echo "Deploying version: <<parameters.version>>"
+        echo "Packaging version: <<parameters.version>>"
         docker run --rm \
           -v /var/run/docker.sock:/var/run/docker.sock \
           -v "$(pwd):$(pwd)" \
