@@ -32,7 +32,7 @@ steps:
           -e SKPR_USERNAME=${SKPR_USERNAME} \
           -e SKPR_PASSWORD=${SKPR_PASSWORD} \
           <<parameters.docker_image>> \
-          skpr backup list <<parameters.source>> --json > backups.json;
+          skpr backup list <<parameters.source>> --json > backups.json
 
         SKPR_BACKUP=$(cat < backups.json | jq -r '[.][0][0].Name')
         if $? -gt 0; then
@@ -47,4 +47,4 @@ steps:
           -e SKPR_USERNAME=${SKPR_USERNAME} \
           -e SKPR_PASSWORD=${SKPR_PASSWORD} \
           <<parameters.docker_image>> \
-          skpr restore create --wait <<parameters.target>> "${SKPR_BACKUP}";
+          skpr restore create --wait <<parameters.target>> "${SKPR_BACKUP}"
