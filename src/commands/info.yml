@@ -22,7 +22,7 @@ steps:
           -e SKPR_USERNAME=${SKPR_USERNAME} \
           -e SKPR_PASSWORD=${SKPR_PASSWORD} \
           <<parameters.docker_image>> \
-          skpr info <<parameters.env>> > info.json;
+          skpr info <<parameters.env>> > info.json
         SKPR_DOMAIN=$(cat < info.json | jq -r ".Ingress.Domain")
         SKPR_URL="https://${SKPR_DOMAIN}"
         echo "Skpr URL: $SKPR_URL"
