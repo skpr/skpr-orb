@@ -29,4 +29,4 @@ steps:
           -e SKPR_USERNAME=${SKPR_USERNAME} \
           -e SKPR_PASSWORD=${SKPR_PASSWORD} \
           <<parameters.docker_image>> \
-          skpr purge create <<parameters.env>> <<parameters.path>>
+          skpr purge create <<parameters.env>> '<<parameters.path>>'
