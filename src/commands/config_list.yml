@@ -21,4 +21,4 @@ steps:
           -e SKPR_USERNAME=${SKPR_USERNAME} \
           -e SKPR_PASSWORD=${SKPR_PASSWORD} \
           <<parameters.docker_image>> \
-          skpr config list <<parameters.env>>
+          skpr config list <<parameters.env>> --filter-type=user
