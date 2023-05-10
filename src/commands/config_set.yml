@@ -1,0 +1,32 @@
+description: >
+  Sets a single Skpr config from an environment.
+
+parameters:
+  docker_image:
+    default: "skpr/cli:latest"
+    description: "The Skpr CLI version tag"
+    type: string
+  env:
+    type: string
+    description: "The app environment"
+  key:
+    type: string
+    default: ""
+    description: "The config value to pass in (ie skpr config get dev myvalue)"
+  value:
+    type: string
+    default: ""
+    description: "The configuration value to assign to the input key"
+
+steps:
+  - run:
+      name: "Skpr Config (Set '<<parameters.key>>')"
+      command: |
+        echo "Setting Skpr config for '<<parameters.key>>' on <<parameters.env>>"
+        docker run --rm \
+          -v "$(pwd):$(pwd)" \
+          -w "$(pwd)" \
+          -e SKPR_USERNAME=${SKPR_USERNAME} \
+          -e SKPR_PASSWORD=${SKPR_PASSWORD} \
+          <<parameters.docker_image>> \
+          skpr config set <<parameters.env>> <<parameters.key>> <<parameters.value>> 

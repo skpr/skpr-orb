@@ -1,0 +1,28 @@
+description: >
+  Gets a single Skpr config from an environment.
+
+parameters:
+  docker_image:
+    default: "skpr/cli:latest"
+    description: "The Skpr CLI version tag"
+    type: string
+  env:
+    type: string
+    description: "The app environment"
+  key:
+    type: string
+    default: ""
+    description: "The config value to pass in (ie skpr config get dev myvalue)"
+
+steps:
+  - run:
+      name: "Skpr Config (Get '<<parameters.key>>')"
+      command: |
+        echo "Getting Skpr config for '<<parameters.key>>' on <<parameters.env>>"
+        docker run --rm \
+          -v "$(pwd):$(pwd)" \
+          -w "$(pwd)" \
+          -e SKPR_USERNAME=${SKPR_USERNAME} \
+          -e SKPR_PASSWORD=${SKPR_PASSWORD} \
+          <<parameters.docker_image>> \
+          skpr config get <<parameters.env>> <<parameters.key>> 
