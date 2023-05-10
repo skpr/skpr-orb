@@ -25,4 +25,4 @@ steps:
           -e SKPR_USERNAME=${SKPR_USERNAME} \
           -e SKPR_PASSWORD=${SKPR_PASSWORD} \
           <<parameters.docker_image>> \
-          skpr config get <<parameters.env>> <<parameters.key>> 
+          skpr config get <<parameters.env>> <<parameters.key>>
