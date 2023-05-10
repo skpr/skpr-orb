@@ -15,7 +15,7 @@ steps:
   - run:
       name: Skpr Info
       command: |
-        echo "Getting Skpr info for $SKPR_ENV"
+        echo "Getting Skpr info for <<parameters.env>>"
         docker run --rm \
           -v "$(pwd):$(pwd)" \
           -w "$(pwd)" \
