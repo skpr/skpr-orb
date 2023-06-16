@@ -1,5 +1,5 @@
 description: >
-  Gets Skpr environment information.
+  Sets a single Skpr config from an environment.
 
 parameters:
   docker_image:
@@ -8,22 +8,23 @@ parameters:
     type: string
   env:
     type: string
-    default: ""
     description: "The app environment"
+  key:
+    type: string
+    description: "The config key to set"
+  value:
+    type: string
+    description: "The configuration value to assign to the input key"
 
 steps:
   - run:
-      name: Skpr Info
+      name: "Skpr Config (Set '<<parameters.key>>')"
       command: |
-        echo "Getting Skpr info for <<parameters.env>>"
+        echo "Setting Skpr config for '<<parameters.key>>' on <<parameters.env>>"
         docker run --rm \
           -v "$(pwd):$(pwd)" \
           -w "$(pwd)" \
           -e SKPR_USERNAME=${SKPR_USERNAME} \
           -e SKPR_PASSWORD=${SKPR_PASSWORD} \
           <<parameters.docker_image>> \
-          skpr info <<parameters.env>> > info.json
-        SKPR_DOMAIN=$(cat < info.json | jq -r ".Ingress.Domain")
-        SKPR_URL="https://${SKPR_DOMAIN}"
-        echo "Skpr URL: $SKPR_URL"
-        echo "export SKPR_URL=$SKPR_URL" >> "${BASH_ENV}"
+          skpr config set <<parameters.env>> <<parameters.key>> <<parameters.value>>
