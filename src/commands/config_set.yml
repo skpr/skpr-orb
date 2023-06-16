@@ -11,11 +11,9 @@ parameters:
     description: "The app environment"
   key:
     type: string
-    default: ""
-    description: "The config value to pass in (ie skpr config get dev myvalue)"
+    description: "The config key to set"
   value:
     type: string
-    default: ""
     description: "The configuration value to assign to the input key"
 
 steps:
