@@ -26,4 +26,4 @@ steps:
           -e SKPR_USERNAME=${SKPR_USERNAME} \
           -e SKPR_PASSWORD=${SKPR_PASSWORD} \
           <<parameters.docker_image>> \
-          skpr package <<parameters.version>> <<^parameters.push>>–-no-push<</parameters.push>> --print-manifest > skpr-manifest.json
+          skpr package <<parameters.version>> <<^parameters.push>>--no-push<</parameters.push>> --print-manifest > skpr-manifest.json
