@@ -12,7 +12,7 @@ parameters:
   title:
     type: string
     description: "Tile of the job to appear in CircleCI's interface."
-    default: "Skpr Cron Suspend"
+    default: "Skpr Cron Resume"
 
 steps:
   - run:
