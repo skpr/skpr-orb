@@ -18,7 +18,7 @@ steps:
   - run:
       name: <<parameters.title>>
       command: |
-        echo "Suspending Cron on \<<parameters.env>"
+        echo "Suspending Cron on \<<parameters.env>>"
         docker run --rm \
           -v "$(pwd):$(pwd)" \
           -w "$(pwd)" \
