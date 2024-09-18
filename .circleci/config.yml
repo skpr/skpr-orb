@@ -6,7 +6,7 @@ orbs:
 
 filters: &filters
   tags:
-    only: /^\d+\.\d+\.\d+[0-9A-Za-z-]*$/
+    only: /.*/
 
 workflows:
   lint-pack:
