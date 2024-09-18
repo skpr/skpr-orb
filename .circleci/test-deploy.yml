@@ -46,5 +46,5 @@ workflows:
           requires:
             - orb-tools/pack
             - command-test
-          context: <publishing-context>
+          context: orb-publishing
           filters: *release-filters
