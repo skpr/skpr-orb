@@ -6,7 +6,7 @@ orbs:
 
 filters: &filters
   tags:
-    only: /.*/
+    only: /^v\d+\.\d+\.\d+$/
 
 workflows:
   lint-pack:
