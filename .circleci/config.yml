@@ -13,7 +13,6 @@ workflows:
     jobs:
       - orb-tools/lint
       - orb-tools/pack
-      # Triggers the next workflow in the Orb Development Kit.
       - orb-tools/continue:
           pipeline_number: << pipeline.number >>
           vcs_type: << pipeline.project.type >>
